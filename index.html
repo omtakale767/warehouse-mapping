@@ -1,0 +1,329 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#090e19">
+    <title>WareFlow | AI Warehouse Routing</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app-layout">
+    <aside class="sidebar" id="sidebar">
+        <div class="brand">
+            <div class="brand-icon"><i class="fa-solid fa-warehouse"></i></div>
+            <div>
+                <h2>WareFlow</h2>
+                <small>INTELLIGENT LOGISTICS</small>
+            </div>
+        </div>
+
+        <div class="nav-label">WORKSPACE</div>
+        <nav class="side-nav">
+            <a href="#overview" class="nav-link active">
+                <i class="fa-solid fa-chart-pie"></i><span>Overview</span>
+            </a>
+            <a href="#optimizer" class="nav-link">
+                <i class="fa-solid fa-route"></i><span>Route Optimizer</span>
+            </a>
+            <a href="#warehouse-map" class="nav-link">
+                <i class="fa-solid fa-map-location-dot"></i><span>Warehouse Map</span>
+            </a>
+            <a href="#routing-result" class="nav-link">
+                <i class="fa-solid fa-list-check"></i><span>Routing Results</span>
+            </a>
+            <a href="#features" class="nav-link">
+                <i class="fa-solid fa-microchip"></i><span>AI & Algorithms</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="system-status">
+                <span class="status-dot"></span>
+                <div><strong>System Online</strong><small>Routing engine ready</small></div>
+            </div>
+            <button class="sidebar-action" id="resetDashboard">
+                <i class="fa-solid fa-rotate-left"></i> Reset Dashboard
+            </button>
+        </div>
+    </aside>
+
+    <div class="main-shell">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div>
+                    <div class="breadcrumb">Workspace / <span>Dashboard</span></div>
+                    <h1>Warehouse Control Center</h1>
+                </div>
+            </div>
+
+            <div class="topbar-right">
+                <span class="live-badge"><span class="status-dot"></span> LIVE SYSTEM</span>
+                <button class="icon-button" id="refreshDashboard" aria-label="Refresh dashboard" title="Refresh">
+                    <i class="fa-solid fa-arrows-rotate"></i>
+                </button>
+                <div class="profile">
+                    <div class="avatar">WF</div>
+                    <div class="profile-text">
+                        <strong>Warehouse Admin</strong>
+                        <small>Routing Manager</small>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="container">
+
+            <!-- ROUTE OPTIMIZER -->
+            <section class="panel" id="optimizer">
+                <div class="section-heading">
+                    <div class="heading-icon"><i class="fa-solid fa-route"></i></div>
+                    <div>
+                        <h2>Route Optimizer</h2>
+                        <p>Calculate the lowest-cost route through your warehouse.</p>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <div class="control">
+                        <label for="source">Source Location</label>
+                        <select id="source">
+                            <option value="A">A — Storage</option>
+                            <option value="B">B — Aisle</option>
+                            <option value="C">C — Aisle</option>
+                            <option value="D">D — Shelf</option>
+                            <option value="E">E — Junction</option>
+                            <option value="F">F — Shelf</option>
+                            <option value="G">G — Shelf</option>
+                            <option value="H">H — Junction</option>
+                            <option value="I">I — Shelf</option>
+                            <option value="J">J — Packing</option>
+                            <option value="K">K — Packing</option>
+                            <option value="L">L — Packing</option>
+                            <option value="M">M — Dispatch</option>
+                        </select>
+                    </div>
+
+                    <div class="control">
+                        <label for="destination">Destination</label>
+                        <select id="destination">
+                            <option value="M">M — Dispatch</option>
+                            <option value="L">L — Packing</option>
+                            <option value="K">K — Packing</option>
+                            <option value="J">J — Packing</option>
+                            <option value="I">I — Shelf</option>
+                            <option value="H">H — Junction</option>
+                            <option value="G">G — Shelf</option>
+                            <option value="F">F — Shelf</option>
+                            <option value="E">E — Junction</option>
+                            <option value="D">D — Shelf</option>
+                            <option value="C">C — Aisle</option>
+                            <option value="B">B — Aisle</option>
+                            <option value="A">A — Storage</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="options">
+                    <label class="checkbox">
+                        <input type="checkbox" id="aiMode">
+                        <span>Enable AI Congestion Adjustment</span>
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" id="blockMode">
+                        <span>Simulate Blocked Paths</span>
+                    </label>
+                </div>
+
+                <div class="optimizer-actions">
+                    <button id="findRoute" class="primary-button">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        Find Optimized Route
+                    </button>
+                    <span class="helper-text">Powered by Dijkstra's algorithm</span>
+                </div>
+            </section>
+
+            <!-- STATISTICS -->
+            <section class="stats" id="overview">
+                <div class="stat-card">
+                    <div class="stat-top"><span>Warehouse Locations</span><span class="stat-icon purple"><i class="fa-solid fa-location-dot"></i></span></div>
+                    <h3 id="locationCount">13</h3>
+                    <p>Mapped locations</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-top"><span>Connections</span><span class="stat-icon blue"><i class="fa-solid fa-diagram-project"></i></span></div>
+                    <h3 id="connectionCount">19</h3>
+                    <p>Warehouse pathways</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-top"><span>Routing Algorithm</span><span class="stat-icon green"><i class="fa-solid fa-bolt"></i></span></div>
+                    <h3>Heap</h3>
+                    <p>Min priority queue</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-top"><span>Routing Mode</span><span class="stat-icon orange"><i class="fa-solid fa-microchip"></i></span></div>
+                    <h3 id="routingMode">Standard</h3>
+                    <p id="routingModeDescription">Normal path costs</p>
+                </div>
+            </section>
+
+            <!-- WAREHOUSE MAP -->
+            <section class="panel" id="warehouse-map">
+                <div class="section-title">
+                    <div class="section-heading">
+                        <div class="heading-icon"><i class="fa-solid fa-map"></i></div>
+                        <div>
+                            <h2>Warehouse Map</h2>
+                            <p>Explore locations and view the calculated route.</p>
+                        </div>
+                    </div>
+                    <div class="legend">
+                        <span><i class="legend-dot normal"></i> Normal</span>
+                        <span><i class="legend-dot congested"></i> Congested</span>
+                        <span><i class="legend-dot blocked"></i> Blocked</span>
+                        <span><i class="legend-dot route"></i> Route</span>
+                    </div>
+                </div>
+
+                <div class="warehouse-wrapper">
+                    <svg id="warehouseSvg" viewBox="0 0 1200 700" role="img" aria-label="Warehouse map showing 13 locations connected by pathways">
+                        <defs>
+                            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#25354b" stroke-width="1"/>
+                            </pattern>
+                        </defs>
+                        <rect width="1200" height="700" fill="url(#grid)"/>
+
+                        <!-- Pathways -->
+                        <g id="warehouseEdges">
+                            <line class="edge normal" id="edge-A-B" x1="130" y1="120" x2="390" y2="120"/>
+                            <line class="edge normal" id="edge-B-C" x1="390" y1="120" x2="650" y2="120"/>
+                            <line class="edge normal" id="edge-A-D" x1="130" y1="120" x2="130" y2="300"/>
+                            <line class="edge normal" id="edge-B-E" x1="390" y1="120" x2="390" y2="300"/>
+                            <line class="edge normal" id="edge-C-F" x1="650" y1="120" x2="650" y2="300"/>
+                            <line class="edge normal" id="edge-D-E" x1="130" y1="300" x2="390" y2="300"/>
+                            <line class="edge normal" id="edge-E-F" x1="390" y1="300" x2="650" y2="300"/>
+                            <line class="edge normal" id="edge-D-G" x1="130" y1="300" x2="130" y2="480"/>
+                            <line class="edge normal" id="edge-E-H" x1="390" y1="300" x2="390" y2="480"/>
+                            <line class="edge normal" id="edge-F-I" x1="650" y1="300" x2="650" y2="480"/>
+                            <line class="edge normal" id="edge-G-H" x1="130" y1="480" x2="390" y2="480"/>
+                            <line class="edge normal" id="edge-H-I" x1="390" y1="480" x2="650" y2="480"/>
+                            <line class="edge normal" id="edge-G-J" x1="130" y1="480" x2="280" y2="610"/>
+                            <line class="edge normal" id="edge-H-K" x1="390" y1="480" x2="520" y2="610"/>
+                            <line class="edge normal" id="edge-I-L" x1="650" y1="480" x2="780" y2="610"/>
+                            <line class="edge normal" id="edge-J-K" x1="280" y1="610" x2="520" y2="610"/>
+                            <line class="edge normal" id="edge-K-L" x1="520" y1="610" x2="780" y2="610"/>
+                            <line class="edge normal" id="edge-K-M" x1="520" y1="610" x2="970" y2="610"/>
+                            <line class="edge normal" id="edge-L-M" x1="780" y1="610" x2="970" y2="610"/>
+                        </g>
+
+                        <!-- Warehouse nodes -->
+                        <g class="node" id="node-A"><circle cx="130" cy="120" r="38"/><text x="130" y="120">A</text></g>
+                        <g class="node" id="node-B"><circle cx="390" cy="120" r="38"/><text x="390" y="120">B</text></g>
+                        <g class="node" id="node-C"><circle cx="650" cy="120" r="38"/><text x="650" y="120">C</text></g>
+                        <g class="node" id="node-D"><circle cx="130" cy="300" r="38"/><text x="130" y="300">D</text></g>
+                        <g class="node" id="node-E"><circle cx="390" cy="300" r="38"/><text x="390" y="300">E</text></g>
+                        <g class="node" id="node-F"><circle cx="650" cy="300" r="38"/><text x="650" y="300">F</text></g>
+                        <g class="node" id="node-G"><circle cx="130" cy="480" r="38"/><text x="130" y="480">G</text></g>
+                        <g class="node" id="node-H"><circle cx="390" cy="480" r="38"/><text x="390" y="480">H</text></g>
+                        <g class="node" id="node-I"><circle cx="650" cy="480" r="38"/><text x="650" y="480">I</text></g>
+                        <g class="node" id="node-J"><circle cx="280" cy="610" r="38"/><text x="280" y="610">J</text></g>
+                        <g class="node" id="node-K"><circle cx="520" cy="610" r="38"/><text x="520" y="610">K</text></g>
+                        <g class="node" id="node-L"><circle cx="780" cy="610" r="38"/><text x="780" y="610">L</text></g>
+                        <g class="node dispatch" id="node-M"><circle cx="970" cy="610" r="45"/><text x="970" y="610">M</text></g>
+
+                        <!-- Location labels -->
+                        <g class="location-labels">
+                            <text class="location-label" x="130" y="70">Storage</text>
+                            <text class="location-label" x="390" y="70">Aisle</text>
+                            <text class="location-label" x="650" y="70">Aisle</text>
+                            <text class="location-label" x="130" y="355">Shelf</text>
+                            <text class="location-label" x="390" y="355">Junction</text>
+                            <text class="location-label" x="650" y="355">Shelf</text>
+                            <text class="location-label" x="130" y="535">Shelf</text>
+                            <text class="location-label" x="390" y="535">Junction</text>
+                            <text class="location-label" x="650" y="535">Shelf</text>
+                            <text class="location-label" x="280" y="665">Packing</text>
+                            <text class="location-label" x="520" y="665">Packing</text>
+                            <text class="location-label" x="780" y="665">Packing</text>
+                            <text class="location-label" x="970" y="665">Dispatch</text>
+                        </g>
+                    </svg>
+                </div>
+                <p class="map-note"><i class="fa-solid fa-circle-info"></i> Costs are illustrative units, not measured distances.</p>
+            </section>
+
+            <!-- ROUTING RESULT -->
+            <section class="panel result-panel" id="routing-result">
+                <div class="section-heading">
+                    <div class="heading-icon"><i class="fa-solid fa-chart-line"></i></div>
+                    <div>
+                        <h2>Routing Results</h2>
+                        <p>Details of the latest route calculation.</p>
+                    </div>
+                </div>
+                <div id="result" aria-live="polite">
+                    <div class="empty-result">
+                        <span class="empty-icon"><i class="fa-solid fa-route"></i></span>
+                        <p>Select a source and destination, then click <b>Find Optimized Route</b>.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PROJECT FEATURES -->
+            <section class="panel" id="features">
+                <div class="section-heading">
+                    <div class="heading-icon"><i class="fa-solid fa-gears"></i></div>
+                    <div>
+                        <h2>System Capabilities</h2>
+                        <p>Algorithms and features used in this academic project.</p>
+                    </div>
+                </div>
+
+                <div class="features">
+                    <article class="feature-card">
+                        <div class="feature-icon purple"><i class="fa-solid fa-diagram-project"></i></div>
+                        <h3>Weighted Graph</h3>
+                        <p>Warehouse locations are represented as vertices and pathways as weighted edges.</p>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon blue"><i class="fa-solid fa-bolt"></i></div>
+                        <h3>Min Heap</h3>
+                        <p>A priority queue helps select the lowest-cost candidate efficiently.</p>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon green"><i class="fa-solid fa-route"></i></div>
+                        <h3>Dijkstra's Algorithm</h3>
+                        <p>Calculates the minimum-cost route for the selected source and destination.</p>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon orange"><i class="fa-solid fa-microchip"></i></div>
+                        <h3>Dynamic Costs</h3>
+                        <p>Demo congestion settings adjust selected edge costs and may change the route.</p>
+                    </article>
+                </div>
+            </section>
+
+            <footer class="footer">
+                <span>© 2026 WareFlow Logistics</span>
+                <span>AI-Based Warehouse Routing · Academic Project</span>
+            </footer>
+        </main>
+    </div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+<script src="script.js"></script>
+</body>
+</html>

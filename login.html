@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Warehouse AI | Login</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;
+  font-family:"Segoe UI",Arial,sans-serif;color:#f8fafc;background:
+  radial-gradient(circle at 15% 20%,rgba(37,99,235,.20),transparent 30%),
+  radial-gradient(circle at 85% 80%,rgba(124,58,237,.18),transparent 30%),#030712
+}
+body:before{
+  content:"";position:fixed;inset:0;pointer-events:none;background-image:
+  linear-gradient(rgba(59,130,246,.035) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(59,130,246,.035) 1px,transparent 1px);background-size:50px 50px
+}
+.auth-card{position:relative;width:430px;max-width:100%;padding:38px 40px;background:rgba(15,23,42,.96);border:1px solid rgba(148,163,184,.12);border-radius:22px;box-shadow:0 30px 80px rgba(0,0,0,.55)}
+.logo{width:68px;height:68px;margin:0 auto 20px;display:grid;place-items:center;border-radius:18px;font-size:30px;background:linear-gradient(135deg,#2563eb,#7c3aed);box-shadow:0 12px 35px rgba(37,99,235,.3)}
+.project-label{text-align:center;color:#60a5fa;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+h1{text-align:center;font-size:27px;margin-bottom:8px}
+.subtitle{text-align:center;color:#64748b;font-size:13px;line-height:1.5;margin-bottom:28px}
+.form-group{margin-bottom:18px}
+label{display:block;margin-bottom:8px;color:#cbd5e1;font-size:12px;font-weight:600}
+.input-box{position:relative}
+.input-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#64748b}
+input{width:100%;height:49px;padding:0 42px;border:1px solid #263244;border-radius:10px;outline:none;background:#080d19;color:#fff;font-size:13px}
+input:focus{border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+input::placeholder{color:#475569}
+.eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:#94a3b8;cursor:pointer}
+.main-btn{width:100%;height:50px;border:0;border-radius:10px;color:#fff;font-weight:700;cursor:pointer;background:linear-gradient(90deg,#2563eb,#7c3aed);transition:.2s}
+.main-btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(37,99,235,.25)}
+.switch{text-align:center;margin-top:22px;color:#64748b;font-size:12px}
+.switch span{color:#60a5fa;cursor:pointer;font-weight:700}
+.message{min-height:20px;text-align:center;margin-top:13px;font-size:12px;line-height:1.5}
+#registerForm{display:none}
+.divider{display:flex;align-items:center;gap:12px;margin:22px 0;color:#475569;font-size:10px}
+.divider:before,.divider:after{content:"";flex:1;height:1px;background:#1e293b}
+@media(max-width:480px){.auth-card{padding:30px 22px}h1{font-size:24px}}
+</style>
+</head>
+<body>
+<main class="auth-card">
+  <section id="loginForm">
+    <div class="logo" aria-hidden="true">🤖</div>
+    <div class="project-label">AI / ML Microproject</div>
+    <h1>Warehouse Routing</h1>
+    <p class="subtitle">Sign in to access the Warehouse AI Routing System.</p>
+
+    <form id="loginFormElement">
+      <div class="form-group">
+        <label for="loginUsername">Username</label>
+        <div class="input-box"><span class="input-icon" aria-hidden="true">👤</span>
+          <input id="loginUsername" type="text" placeholder="Enter username" autocomplete="username" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="loginPassword">Password</label>
+        <div class="input-box"><span class="input-icon" aria-hidden="true">🔒</span>
+          <input id="loginPassword" type="password" placeholder="Enter password" autocomplete="current-password" required>
+          <button class="eye" type="button" aria-label="Show password" onclick="togglePassword('loginPassword',this)">👁</button>
+        </div>
+      </div>
+      <button class="main-btn" type="submit">Sign In →</button>
+    </form>
+    <p id="loginMessage" class="message" role="status" aria-live="polite"></p>
+    <div class="divider">OR</div>
+    <p class="switch">Don't have an account? <span onclick="showRegister()">Create Account</span></p>
+  </section>
+
+  <section id="registerForm">
+    <div class="logo" aria-hidden="true">✨</div>
+    <div class="project-label">AI / ML Microproject</div>
+    <h1>Create Account</h1>
+    <p class="subtitle">Create an account to use the Warehouse Routing System.</p>
+
+    <form id="registerFormElement">
+      <div class="form-group">
+        <label for="registerUsername">Username</label>
+        <div class="input-box"><span class="input-icon" aria-hidden="true">👤</span>
+          <input id="registerUsername" type="text" placeholder="Create username" autocomplete="username" minlength="3" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="registerPassword">Password</label>
+        <div class="input-box"><span class="input-icon" aria-hidden="true">🔒</span>
+          <input id="registerPassword" type="password" placeholder="At least 6 characters" autocomplete="new-password" minlength="6" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <div class="input-box"><span class="input-icon" aria-hidden="true">🔐</span>
+          <input id="confirmPassword" type="password" placeholder="Confirm password" autocomplete="new-password" required>
+        </div>
+      </div>
+      <button class="main-btn" type="submit">Create Account →</button>
+    </form>
+    <p id="registerMessage" class="message" role="status" aria-live="polite"></p>
+    <div class="divider">OR</div>
+    <p class="switch">Already have an account? <span onclick="showLogin()">Sign In</span></p>
+  </section>
+</main>
+
+<script>
+function getUsers(){
+  try { return JSON.parse(localStorage.getItem("warehouseUsers") || "[]"); }
+  catch { return []; }
+}
+function saveUsers(users){
+  localStorage.setItem("warehouseUsers", JSON.stringify(users));
+}
+function showRegister(){
+  document.getElementById("loginForm").style.display="none";
+  document.getElementById("registerForm").style.display="block";
+  clearMessages();
+}
+function showLogin(){
+  document.getElementById("registerForm").style.display="none";
+  document.getElementById("loginForm").style.display="block";
+  clearMessages();
+}
+function clearMessages(){
+  document.getElementById("loginMessage").textContent="";
+  document.getElementById("registerMessage").textContent="";
+}
+function togglePassword(id,button){
+  const input=document.getElementById(id);
+  const showing=input.type==="password";
+  input.type=showing?"text":"password";
+  button.textContent=showing?"🙈":"👁";
+  button.setAttribute("aria-label",showing?"Hide password":"Show password");
+}
+
+document.getElementById("registerFormElement").addEventListener("submit",function(event){
+  event.preventDefault();
+  const username=document.getElementById("registerUsername").value.trim();
+  const password=document.getElementById("registerPassword").value;
+  const confirm=document.getElementById("confirmPassword").value;
+  const message=document.getElementById("registerMessage");
+
+  if(username.length<3){
+    message.style.color="#f87171"; message.textContent="Username must contain at least 3 characters."; return;
+  }
+  if(password.length<6){
+    message.style.color="#f87171"; message.textContent="Password must contain at least 6 characters."; return;
+  }
+  if(password!==confirm){
+    message.style.color="#f87171"; message.textContent="Passwords do not match."; return;
+  }
+
+  const users=getUsers();
+  if(users.some(user=>user.username.toLowerCase()===username.toLowerCase())){
+    message.style.color="#f87171"; message.textContent="Username already exists."; return;
+  }
+
+  users.push({username,password});
+  saveUsers(users);
+  message.style.color="#4ade80";
+  message.textContent="Account created successfully. Please sign in.";
+  document.getElementById("registerFormElement").reset();
+  document.getElementById("loginUsername").value=username;
+  setTimeout(showLogin,900);
+});
+
+document.getElementById("loginFormElement").addEventListener("submit",function(event){
+  event.preventDefault();
+  const username=document.getElementById("loginUsername").value.trim();
+  const password=document.getElementById("loginPassword").value;
+  const message=document.getElementById("loginMessage");
+  const user=getUsers().find(item=>item.username===username && item.password===password);
+
+  if(!user){
+    message.style.color="#f87171";
+    message.textContent="Invalid username or password. Create an account if you are new.";
+    return;
+  }
+
+  sessionStorage.setItem("loggedIn","true");
+  sessionStorage.setItem("username",user.username);
+  message.style.color="#4ade80";
+  message.textContent="Login successful. Opening dashboard...";
+  window.location.href="index.html";
+});
+
+// If already signed in, open the dashboard directly.
+if(sessionStorage.getItem("loggedIn")==="true"){
+  window.location.href="index.html";
+}
+</script>
+</body>
+</html>
